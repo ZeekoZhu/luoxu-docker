@@ -1,0 +1,6 @@
+[submodule "luoxu"]
+	path = luoxu
+	url = https://github.com/lilydjwg/luoxu.git
+[submodule "luoxu-web"]
+	path = luoxu-web
+	url = https://github.com/lilydjwg/luoxu-web.git

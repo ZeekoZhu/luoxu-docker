@@ -1,0 +1,30 @@
+version: "3"
+services:
+  db:
+    image: docker.io/groonga/pgroonga:latest-alpine-16
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d
+      - ./db/data:/var/lib/postgresql/data:Z
+    environment:
+      POSTGRES_DB: luoxu
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+
+  luoxu-api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: luoxu-api
+    environment:
+      ENABLE_STDIN_API: "true"
+    ports:
+      - 5000:5000 # http server
+      - 9008:9008 # luoxu api
+    volumes:
+      - ./luoxu-input:/luoxu-input
+      - ./config:/config
+      - ./config.toml:/app/config.toml
+    links:
+      - "db:database"
